@@ -182,6 +182,7 @@ Function Local-Password-Policy {
             $global:logOutput += "Current: $currentFailedSignInAttemptLockout Attempted Change: $FailedSignInAttemptLockout`r`n"
             $global:logOutput += "Current: $currentTotalLockoutTimeAfterFails Attempted Change: $TotalLockoutTimeAfterFails`r`n"
             $global:logOutput += "Current: $currentLockoutObservationWindow Attempted Change: $LockoutObservationWindow"
+            $global:logOutput
         }
     } Else {
         $global:status = 'Success'
