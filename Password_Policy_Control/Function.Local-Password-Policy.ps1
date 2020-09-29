@@ -101,7 +101,7 @@ Function Local-Password-Policy {
         [string]$DisableNoExpiration = 'N'
     )
 
-    
+
     ## Set all accounts to expire if the option was set
     If ($DisableNoExpiration -eq 'Y') {
         ## Get the list of local enabled user
@@ -171,7 +171,7 @@ Function Local-Password-Policy {
         $pattern = 'Lockout observation window \(minutes\):\s*(.*)'
         $currentLockoutObservationWindow = ((net accounts) | Select-String -Pattern $pattern).Matches.Groups[1].Value
 
-        ## If any of the settings aren't what we just tried to set them to, set $statust to Failed and output the results of what failed to $logOutput
+        ## If any of the settings aren't what we just tried to set them to, set $status to Failed and output the results of what failed to $logOutput
         If ($currentForceLogoffTimer -ne $ForceLogoffTimer -or $currentMinPasswordChange -ne $MinPasswordChange -or $currentMaxPasswordAge -ne $MaxPasswordAge -or $currentMinPasswordLength -ne $MinPasswordLength -or $currentUniquePasswordHistory -ne $UniquePasswordHistory -or $currentFailedSignInAttemptLockout -ne $FailedSignInAttemptLockout -or $currentTotalLockoutTimeAfterFails -ne $TotalLockoutTimeAfterFails -or $currentLockoutObservationWindow -ne $LockoutObservationWindow) {
             $global:status = 'Failed'
             $global:logOutput += "Current: $currentForceLogoffTimer Attempted Change: $ForceLogoffTimer`r`n"
