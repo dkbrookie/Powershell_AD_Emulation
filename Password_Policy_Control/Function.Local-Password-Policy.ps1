@@ -101,6 +101,17 @@ Function Local-Password-Policy {
         [string]$DisableNoExpiration = 'N'
     )
 
+    ## Set all accounts to expire if the option was set
+    If ($DisableNoExpiration -eq 'Y') {
+        ## Get the list of local enabled user
+        $users = (Get-LocalUser | Where { $_.Enabled -eq 'True' }).Name
+        ForEach ($user in $users) {
+            ## Set each account password expires to TRUE
+            &cmd.exe /c "WMIC USERACCOUNT WHERE Name='$user' SET PasswordExpires=TRUE" | Out-Null
+        }
+    }
+
+
     ## Get the current values set for local password policy
     If ($ForceLogoffTimer -eq 'NO') {
         $ForceLogoffTimer = 'Never'
