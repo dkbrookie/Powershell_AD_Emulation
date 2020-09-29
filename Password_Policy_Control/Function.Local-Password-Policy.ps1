@@ -57,7 +57,7 @@ Function Local-Password-Policy {
         [Parameter (
             HelpMessage='Set the number of minutes a user has before being forced to log off when the account expires or valid logon hours expire. This value must be between 0 - 999, or No.'
         )]
-        [string]$ForceLogoffTimer = 'No'
+        [string]$ForceLogoffTimer = 'NO'
 
         ,[Parameter (
             HelpMessage='Set a minimum number of days that must pass before a user can change a password. This value must be between 0 - 999.'
