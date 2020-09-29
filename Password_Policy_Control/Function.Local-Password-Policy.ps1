@@ -101,6 +101,7 @@ Function Local-Password-Policy {
         [string]$DisableNoExpiration = 'N'
     )
 
+    
     ## Set all accounts to expire if the option was set
     If ($DisableNoExpiration -eq 'Y') {
         ## Get the list of local enabled user
