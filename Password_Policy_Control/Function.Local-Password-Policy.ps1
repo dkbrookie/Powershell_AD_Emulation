@@ -80,7 +80,7 @@ Function Local-Password-Policy {
         [int]$UniquePasswordHistory = 24
 
         ,[Parameter (
-            HelpMessage='Determines the number of failed sign-in attempts that will cause a local account to be locked. This value must be between 0 - 999f.'
+            HelpMessage='Determines the number of failed sign-in attempts that will cause a local account to be locked. This value must be between 0 - 999.'
         )]
         [int]$FailedSignInAttemptLockout = 10
 
