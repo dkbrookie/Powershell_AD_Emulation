@@ -102,7 +102,7 @@ Function Local-Password-Policy {
     )
 
     ## Get the current values set for local password policy
-    If ($ForceLogoffTimer -eq 'No') {
+    If ($ForceLogoffTimer -eq 'NO') {
         $ForceLogoffTimer = 'Never'
     }
     $pattern = 'Force user logoff how long after time expires\?:\s*(.*)'
@@ -126,6 +126,9 @@ Function Local-Password-Policy {
     ## Check values defined when the function was called vs the current settings on the local machine and if different, fix it
     If ($currentForceLogoffTimer -ne $ForceLogoffTimer -or $currentMinPasswordChange -ne $MinPasswordChange -or $currentMaxPasswordAge -ne $MaxPasswordAge -or $currentMinPasswordLength -ne $MinPasswordLength -or $currentUniquePasswordHistory -ne $UniquePasswordHistory -or $currentFailedSignInAttemptLockout -ne $FailedSignInAttemptLockout -or $currentTotalLockoutTimeAfterFails -ne $TotalLockoutTimeAfterFails -or $currentLockoutObservationWindow -ne $LockoutObservationWindow) {
         ## Set all policy values to the values set when the function was called
+        If ($ForceLogoffTimer -eq 'Never') {
+            $ForceLogoffTimer = 'NO'
+        }
         &cmd.exe /c "net accounts /forcelogoff:$ForceLogoffTimer" | Out-Null
         &cmd.exe /c "net accounts /minpwage:$MinPasswordChange" | Out-Null
         &cmd.exe /c "net accounts /maxpwage:$MaxPasswordAge" | Out-Null
@@ -136,6 +139,9 @@ Function Local-Password-Policy {
         &cmd.exe /c "net accounts /lockoutwindow:$LockoutObservationWindow" | Out-Null
         
         ## Get the values again for local password policy so we can check and make sure the changes were successful
+        If ($ForceLogoffTimer -eq 'NO') {
+            $ForceLogoffTimer = 'Never'
+        }
         $pattern = 'Force user logoff how long after time expires\?:\s*(.*)'
         $currentForceLogoffTimer = ((net accounts) | Select-String -Pattern $pattern).Matches.Groups[1].Value
         $pattern = 'Minimum password age \(days\):\s*(.*)'
