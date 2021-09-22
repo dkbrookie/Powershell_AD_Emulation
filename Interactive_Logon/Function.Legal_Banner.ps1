@@ -26,6 +26,19 @@ Function Set-LogonLegalNotice {
         [string]$BannerMessage
     )
 
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "legalnoticecaption" -Value $BannerTitle
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "legalnoticetext" -Value $BannerMessage
+
+    $output = @()
+
+
+    Try {
+        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "legalnoticecaption" -Value $BannerTitle
+        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "legalnoticetext" -Value $BannerMessage
+        $output += "!SUCCESS: Successfully configured the logon legal notice!"
+    } Catch {
+        $output += "!FAILED: There was a problem when attempting to set the values for the logon legal notice. Full error output: $Error"
+    }
+
+    
+    $output = $output -join "`n"
+    Return $output
 }
