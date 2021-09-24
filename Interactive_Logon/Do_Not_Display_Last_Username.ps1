@@ -2,7 +2,7 @@ $output = @()
 $regPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
 
 Try {
-    If ((Get-ItemProperty -Path $regPath -Name dontdisplaylastusername) -ne 1) {
+    If ((Get-ItemProperty -Path $regPath).dontdisplaylastusername -ne 1) {
         $output += "[dontdisplaylastusername] at $regPath was not set to 1, setting to 1 now..."
         Set-ItemProperty -Path $regPath -Name dontdisplaylastusername -Value 1
         $output += "!SUCCESS: Successfully set [dontdisplaylastusername] at $regPath to 1!"
